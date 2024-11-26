@@ -1,12 +1,12 @@
 steps:
-- name: 'gcr.io/cloud-builders/gcloud'
-  args:
-    - 'bq'
-    - 'query'
-    - '--use_legacy_sql=false'
-    - '--format=none'
-    - |
-      SELECT 1;
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        # Run BigQuery query using 'bq'
+        bq query --use_legacy_sql=false --format=none \
+          "SELECT 1;"
     # - '--file=sql/view_script.sql'
 timeout: '1600s'
 options:
