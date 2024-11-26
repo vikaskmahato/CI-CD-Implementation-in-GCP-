@@ -1,13 +1,11 @@
 steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   args:
-     - 'version'
-    #- 'bq'
-    #- 'query'
-    #- '--use_legacy_sql=false'
-    #- '--project_id=airy-parsec-400006'
-    #- '--file'
-    #- 'sql/view_script.sql'
+    - 'bq'
+    - 'query'
+    - '--use_legacy_sql=false'
+    - '--format=none'
+    - '--file=sql/view_script.sql'
 timeout: '600s'
 options:
   logging: CLOUD_LOGGING_ONLY
