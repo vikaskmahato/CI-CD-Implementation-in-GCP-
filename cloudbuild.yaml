@@ -1,6 +1,7 @@
 steps:
-- name: 'gcr.io/community-builders/bq'
+- name: 'gcr.io/cloud-builders/gcloud'
   args:
+    - 'bq'
     - 'query'
     - '--use_legacy_sql=false'
     - '--format=none'
