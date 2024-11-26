@@ -5,6 +5,6 @@ steps:
     - '--use_legacy_sql=false'
     - '--format=none'
     - '--file=sql/view_script.sql'
-timeout: '600s'
+timeout: '1600s'
 options:
   logging: CLOUD_LOGGING_ONLY
