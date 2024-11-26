@@ -1,4 +1,3 @@
-serviceAccount: '67740298329@cloudbuild.gserviceaccount.com'
 steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   args:
