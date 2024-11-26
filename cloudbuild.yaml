@@ -1,0 +1,10 @@
+steps:
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+    - 'bq'
+    - 'query'
+    - '--use_legacy_sql=false'
+    - '--project_id=airy-parsec-400006'
+    - '--file'
+    - 'sql/view_script.sql'
+timeout: '600s'
