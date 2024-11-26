@@ -4,7 +4,9 @@ steps:
     - 'query'
     - '--use_legacy_sql=false'
     - '--format=none'
-    - '--file=sql/view_script.sql'
+    - |
+      SELECT 1;
+    # - '--file=sql/view_script.sql'
 timeout: '1600s'
 options:
   logging: CLOUD_LOGGING_ONLY
