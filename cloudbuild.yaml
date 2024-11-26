@@ -9,4 +9,4 @@ steps:
     - 'sql/view_script.sql'
 timeout: '600s'
 options:
-  logging: NONE
+  logging: CLOUD_LOGGING_ONLY
