@@ -8,3 +8,5 @@ steps:
     - '--file'
     - 'sql/view_script.sql'
 timeout: '600s'
+options:
+  logging: NONE
