@@ -19,8 +19,9 @@ steps:
         echo "Fetching changed files..."
         git fetch --depth=2 origin main
         # Get the list of changed files between the latest commit and the previous commit
-        CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
-        echo "Changed files: $CHANGED_FILES"
+        git diff --name-only HEAD~1 HEAD | while read -r file; do
+          echo "Processing file: $file"
+          
 
   #       # Save the list of changed files to a workspace file
   #       # echo "$CHANGED_FILES" > /workspace/changed_files.txt
