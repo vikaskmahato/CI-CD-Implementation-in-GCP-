@@ -23,6 +23,8 @@ steps:
         git fetch --depth=2 origin main
         
         echo '$_CHANGED_FILES'
+        $_CHANGED_FILES='mahato'
+        echo '$_CHANGED_FILES'
         # $_CHANGED_FILES='$(git diff --name-only HEAD~1 HEAD)'
         echo "Changed files: $_CHANGED_FILES"
         # Get the list of changed files between the latest commit and the previous commit
