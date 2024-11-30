@@ -29,6 +29,7 @@ steps:
     args:
       - '-c'
       - |
+        CHANGED_FILES=$(cat /workspace/changed_files.txt)
         # Initialize an empty list of files to process
         SQL_FILES_TO_PROCESS=""
 
