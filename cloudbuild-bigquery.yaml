@@ -21,11 +21,8 @@ steps:
         cd /workspace
         echo "Fetching changed files..."
         git fetch --depth=2 origin main
-        echo "Changed files: $CHANGED_FILES"
-        CHANGED_FILES='vikas'
-        echo "Changed files: $CHANGED_FILES"
-        # $_CHANGED_FILES='vikas'
-        # echo '$_CHANGED_FILES'
+        
+        echo '$_CHANGED_FILES'
         # $_CHANGED_FILES='$(git diff --name-only HEAD~1 HEAD)'
         echo "Changed files: $_CHANGED_FILES"
         # Get the list of changed files between the latest commit and the previous commit
@@ -77,7 +74,7 @@ steps:
 
 substitutions:
   _SQL_FILES_TO_PROCESS: ''
-  _CHANGED_FILES: ''
+  _CHANGED_FILES: 'vikas'
 timeout: '1600s'
 options:
   logging: CLOUD_LOGGING_ONLY
