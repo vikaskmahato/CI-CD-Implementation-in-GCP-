@@ -9,14 +9,8 @@ steps:
         CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
 
         # Save the list of changed files to a workspace file
-        echo "$CHANGED_FILES" > /workspace/changed_files.txt
-
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'bash'
-    args:
-      - '-c'
-      - |
-        CHANGED_FILES=$(cat /workspace/changed_files.txt)      
+        # echo "$CHANGED_FILES" > /workspace/changed_files.txt
+      
         DAG_FILES=""
         for file in $CHANGED_FILES; do
           if [[ "$file" =~ ^composer/dags/.*\.py$]]; then
