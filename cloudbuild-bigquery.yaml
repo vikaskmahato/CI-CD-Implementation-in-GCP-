@@ -19,7 +19,7 @@ steps:
         echo "Fetching changed files..."
         git fetch --depth=2 origin main
         gcloud builds submit --config=cloudbuild-bigquery.yaml \
-  --substitutions=_CHANGED_FILES="$(git diff --name-only HEAD~1 HEAD)",_SQL_FILES_TO_PROCESS="vikas"
+          --substitutions=_CHANGED_FILES="$(git diff --name-only HEAD~1 HEAD)",_SQL_FILES_TO_PROCESS="vikas"
         # $_CHANGED_FILES='vikas'
         # echo '$_CHANGED_FILES'
         # $_CHANGED_FILES='$(git diff --name-only HEAD~1 HEAD)'
