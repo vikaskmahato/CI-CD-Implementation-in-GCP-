@@ -15,9 +15,20 @@ steps:
     args:
       - '-c'
       - |
-        # Get the list of changed files in the commit
-        CHANGED_FILES=$(git diff --name-only HEAD^ HEAD)
+        echo "Fetching changed files..."
+        git fetch origin
+        # Get the list of changed files between the latest commit and the previous commit
+        CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
+        echo "Changed files: $CHANGED_FILES"
+
+        # Save the list of changed files to a workspace file
+        echo "$CHANGED_FILES" > /workspace/changed_files.txt
         
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
         # Initialize an empty list of files to process
         SQL_FILES_TO_PROCESS=""
 
