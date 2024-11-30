@@ -16,18 +16,11 @@ steps:
       - '-c'
       - |
         cd /workspace
-        # echo "Fetching changed files..."
-        # git fetch --depth=2 origin main
-        # # Get the list of changed files between the latest commit and the previous commit
-        # CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
-        # echo "Changed files: $CHANGED_FILES"
-
-        git fetch --unshallow
-
-        # List all changes to SQL files in the last N commits
-        CHANGED_FILES=$(git log --name-only --pretty=format: -- '*.sql' | sort | uniq)
-        echo "Changed SQL files: $CHANGED_FILES"
-   
+        echo "Fetching changed files..."
+        git fetch --depth=2 origin main
+        # Get the list of changed files between the latest commit and the previous commit
+        CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
+        echo "Changed files: $CHANGED_FILES"
 
         # Save the list of changed files to a workspace file
         echo "$CHANGED_FILES" > /workspace/changed_files.txt
