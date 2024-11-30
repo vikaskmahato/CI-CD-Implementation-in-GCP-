@@ -21,6 +21,11 @@ steps:
         # Get the list of changed files between the latest commit and the previous commit
         git diff --name-only HEAD~1 HEAD | while read -r file; do
           echo "Processing file: $file"
+          SQL_FILES_TO_PROCESS=""
+          if [[ "$file" =~ .*\.sql$ ]]; then
+          # if [[ "$file" =~ ^source/.*\.sql$ || "$file" =~ ^historical/.*\.sql$ || "$file" =~ ^test/.*\.sql$ ]]; then
+            SQL_FILES_TO_PROCESS="$SQL_FILES_TO_PROCESS $file"
+          fi
         done 
 
   #       # Save the list of changed files to a workspace file
@@ -28,7 +33,7 @@ steps:
         
   #       # CHANGED_FILES=$(cat /workspace/changed_files.txt)
   #       # Initialize an empty list of files to process
-  #       SQL_FILES_TO_PROCESS=""
+        # SQL_FILES_TO_PROCESS=""
 
   #       # Identify which files are SQL files in specific folders
   #       for file in $CHANGED_FILES; do
@@ -38,13 +43,13 @@ steps:
   #         fi
   #       done
 
-  #       # Check if there are any SQL files to process
-  #       if [ -z "$SQL_FILES_TO_PROCESS" ]; then
-  #         echo "No SQL files changed. Exiting."
-  #         exit 0
-  #       else
-  #         echo "Changed SQL files: $SQL_FILES_TO_PROCESS"
-  #       fi
+        # Check if there are any SQL files to process
+        if [ -z "$SQL_FILES_TO_PROCESS" ]; then
+          echo "No SQL files changed. Exiting."
+          exit 0
+        else
+          echo "Changed SQL files: $SQL_FILES_TO_PROCESS"
+        fi
 
   # # Run each SQL file in BigQuery
   # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
