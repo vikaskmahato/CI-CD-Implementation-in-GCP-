@@ -18,9 +18,11 @@ steps:
         cd /workspace
         echo "Fetching changed files..."
         git fetch --depth=2 origin main
-        $_CHANGED_FILES = 'vikas'
-        echo '$_CHANGED_FILES'
-        $_CHANGED_FILES='$(git diff --name-only HEAD~1 HEAD)'
+        gcloud builds submit --config=cloudbuild-bigquery.yaml \
+  --substitutions=_CHANGED_FILES="$(git diff --name-only HEAD~1 HEAD)",_SQL_FILES_TO_PROCESS="vikas"
+        # $_CHANGED_FILES='vikas'
+        # echo '$_CHANGED_FILES'
+        # $_CHANGED_FILES='$(git diff --name-only HEAD~1 HEAD)'
         echo "Changed files: $_CHANGED_FILES"
         # Get the list of changed files between the latest commit and the previous commit
         # git diff --name-only HEAD~1 HEAD | while read -r file; do
