@@ -10,8 +10,8 @@ steps:
   #       bq query --use_legacy_sql=false --format=none \
   #         "$(cat view_script.sql)"
     # - '--file=sql/view_script.sql'
-  - name: 'gcr.io/cloud-builders/bash'
-    entrypoint: 'bash'
+  - name: 'alpine'
+    entrypoint: 'sh'
     args:
       - '-c'
       - |
