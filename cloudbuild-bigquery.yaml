@@ -23,32 +23,32 @@ steps:
           echo "Processing file: $file"
           if [[ "$file" =~ .*\.sql$ ]]; then
           # if [[ "$file" =~ ^source/.*\.sql$ || "$file" =~ ^historical/.*\.sql$ || "$file" =~ ^test/.*\.sql$ ]]; then
-            SQL_FILES_TO_PROCESS="$SQL_FILES_TO_PROCESS $file"
+            _SQL_FILES_TO_PROCESS="$_SQL_FILES_TO_PROCESS $file"
           fi
         done
-        echo "Changed SQL files: $SQL_FILES_TO_PROCESS" 
+        echo "Changed SQL files: $_SQL_FILES_TO_PROCESS" 
 
   #       # Save the list of changed files to a workspace file
   #       # echo "$CHANGED_FILES" > /workspace/changed_files.txt
         
   #       # CHANGED_FILES=$(cat /workspace/changed_files.txt)
   #       # Initialize an empty list of files to process
-        # SQL_FILES_TO_PROCESS=""
+        # _SQL_FILES_TO_PROCESS=""
 
   #       # Identify which files are SQL files in specific folders
   #       for file in $CHANGED_FILES; do
   #         if [[ "$file" =~ .*\.sql$ ]]; then
   #         # if [[ "$file" =~ ^source/.*\.sql$ || "$file" =~ ^historical/.*\.sql$ || "$file" =~ ^test/.*\.sql$ ]]; then
-  #           SQL_FILES_TO_PROCESS="$SQL_FILES_TO_PROCESS $file"
+  #           _SQL_FILES_TO_PROCESS="$_SQL_FILES_TO_PROCESS $file"
   #         fi
   #       done
 
         # Check if there are any SQL files to process
-        # if [ -z "$SQL_FILES_TO_PROCESS" ]; then
+        # if [ -z "$_SQL_FILES_TO_PROCESS" ]; then
         #   echo "No SQL files changed. Exiting."
         #   exit 0
         # else
-        #   echo "Changed SQL files: $SQL_FILES_TO_PROCESS"
+        #   echo "Changed SQL files: $_SQL_FILES_TO_PROCESS"
         # fi
 
   # # Run each SQL file in BigQuery
@@ -58,7 +58,7 @@ steps:
   #     - '-c'
   #     - |
   #       # For each SQL file, run the corresponding query in BigQuery
-  #       for file in $SQL_FILES_TO_PROCESS; do
+  #       for file in $_SQL_FILES_TO_PROCESS; do
   #         echo "Running SQL query from file: $file"
   #         bq query --use_legacy_sql=false --format=none \
   #           "$(cat $file)"
@@ -66,7 +66,7 @@ steps:
 
 
 substitutions:
-  SQL_FILES_TO_PROCESS: ''
+  _SQL_FILES_TO_PROCESS: ''
 timeout: '1600s'
 options:
   logging: CLOUD_LOGGING_ONLY
