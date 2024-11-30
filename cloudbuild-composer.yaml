@@ -4,7 +4,7 @@ steps:
     args:
       - '-c'
       - |
-        git fetch --depth=1 origin main
+        git fetch --depth=2 origin main
         CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
         DAG_FILES=""
         for file in $CHANGED_FILES; do
