@@ -6,27 +6,25 @@ steps:
       - |
         cd /workspace
         git fetch --depth=2 origin main
-        CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
+        _CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
 
         # Save the list of changed files to a workspace file
-        # echo "$CHANGED_FILES" > /workspace/changed_files.txt
+        # echo "$_CHANGED_FILES" > /workspace/_CHANGED_FILES.txt
       
-        DAG_FILES=""
-        for file in $CHANGED_FILES; do
+        for file in $_CHANGED_FILES; do
           if [[ "$file" =~ ^composer/dags/.*\.py$]]; then
-            DAG_FILES="$DAG_FILES $file"
+            _DAG_FILES="$_DAG_FILES $file"
           fi
         done
 
-        if [ -z "$DAG_FILES" ]; then
+        if [ -z "$_DAG_FILES" ]; then
           echo "No DAG files changed. Exiting..."
           exit 0
         fi
 
-        BUCKET_NAME="us-central1-testing-cloudbu-c3b2633c-bucket"
-        for file in $DAG_FILES; do
-          echo "Uploading $file to gs://$BUCKET_NAME/$file..."
-          gsutil cp $file gs://$BUCKET_NAME/$file
+        for file in $_DAG_FILES; do
+          echo "Uploading $file to gs://$_BUCKET_NAME/$file..."
+          gsutil cp $file gs://$_BUCKET_NAME/$file
         done
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -39,6 +37,10 @@ steps:
           --location your-region \
           --update-labels=updated=true
 
+substitutions:
+  _DAG_FILES: ''
+  _CHANGED_FILES: ''
+  __BUCKET_NAME: 'us-central1-testing-cloudbu-c3b2633c-bucket'
 timeout: '1600s'
 options:
   logging: CLOUD_LOGGING_ONLY
