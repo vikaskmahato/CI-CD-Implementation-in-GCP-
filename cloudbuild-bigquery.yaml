@@ -10,11 +10,8 @@ steps:
   #       bq query --use_legacy_sql=false --format=none \
   #         "$(cat view_script.sql)"
     # - '--file=sql/view_script.sql'
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  - name: 'gcr.io/cloud-builders/bash'
     entrypoint: 'bash'
-    env: 
-      - 'CHANGED_FILES='
-
     args:
       - '-c'
       - |
@@ -22,13 +19,11 @@ steps:
         echo "Fetching changed files..."
         git fetch --depth=2 origin main
         
-        echo '$_CHANGED_FILES'
+        
         CHANGED_FILES='mahato'
-        echo '$$CHANGED_FILES'
-        echo '${CHANGED_FILES}'
-        echo $$CHANGED_FILES
+
         # $_CHANGED_FILES='$(git diff --name-only HEAD~1 HEAD)'
-        echo "Changed files: $_CHANGED_FILES"
+        echo "Changed files: $CHANGED_FILES"
         # Get the list of changed files between the latest commit and the previous commit
         # git diff --name-only HEAD~1 HEAD | while read -r file; do
         #   echo "Processing file: $file"
@@ -37,7 +32,7 @@ steps:
         #     $_SQL_FILES_TO_PROCESS="$_SQL_FILES_TO_PROCESS $file"
         #   fi
         # done
-        echo "Changed SQL files: $_SQL_FILES_TO_PROCESS" 
+         
 
   #       # Save the list of changed files to a workspace file
   #       # echo "$CHANGED_FILES" > /workspace/changed_files.txt
@@ -76,9 +71,6 @@ steps:
   #       done
 
 
-substitutions:
-  _SQL_FILES_TO_PROCESS: ''
-  _CHANGED_FILES: 'vikas'
 timeout: '1600s'
 options:
   logging: CLOUD_LOGGING_ONLY
