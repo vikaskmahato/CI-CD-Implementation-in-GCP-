@@ -4,6 +4,7 @@ steps:
     args:
       - '-c'
       - |
+        cd /workspace
         git fetch --depth=2 origin main
         CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD)
         DAG_FILES=""
