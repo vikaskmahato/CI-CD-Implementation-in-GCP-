@@ -17,7 +17,7 @@ steps:
           exit 0
         fi
 
-        BUCKET_NAME="your-composer-bucket-name"
+        BUCKET_NAME="us-central1-testing-cloudbu-c3b2633c-bucket"
         for file in $DAG_FILES; do
           echo "Uploading $file to gs://$BUCKET_NAME/$file..."
           gsutil cp $file gs://$BUCKET_NAME/$file
