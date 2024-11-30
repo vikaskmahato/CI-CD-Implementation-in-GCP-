@@ -21,7 +21,6 @@ steps:
         # Get the list of changed files between the latest commit and the previous commit
         git diff --name-only HEAD~1 HEAD | while read -r file; do
           echo "Processing file: $file"
-          SQL_FILES_TO_PROCESS=""
           if [[ "$file" =~ .*\.sql$ ]]; then
           # if [[ "$file" =~ ^source/.*\.sql$ || "$file" =~ ^historical/.*\.sql$ || "$file" =~ ^test/.*\.sql$ ]]; then
             SQL_FILES_TO_PROCESS="$SQL_FILES_TO_PROCESS $file"
@@ -66,6 +65,9 @@ steps:
   #       done
 
 
+substitutions:
+  SQL_FILES_TO_PROCESS: ''
 timeout: '1600s'
 options:
   logging: CLOUD_LOGGING_ONLY
+
