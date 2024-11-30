@@ -6,14 +6,14 @@ steps:
       - |
         cd /workspace
         git fetch --depth=2 origin main
-        _CHANGED_FILES="$(git diff --name-only HEAD~1 HEAD)"
+        $_CHANGED_FILES="$(git diff --name-only HEAD~1 HEAD)"
 
         # Save the list of changed files to a workspace file
         # echo "$_CHANGED_FILES" > /workspace/_CHANGED_FILES.txt
       
         for file in $_CHANGED_FILES; do
-          if [[ "$file" =~ ^composer/dags/.*\.py$]]; then
-            _DAG_FILES="$_DAG_FILES $file"
+          if [ "$file" =~ ^composer/dags/.*\.py$]; then
+            $_DAG_FILES="$_DAG_FILES $file"
           fi
         done
 

@@ -18,16 +18,16 @@ steps:
         cd /workspace
         echo "Fetching changed files..."
         git fetch --depth=2 origin main
-        _CHANGED_FILES = 'vikas'
+        $_CHANGED_FILES = 'vikas'
         echo '$_CHANGED_FILES'
-        _CHANGED_FILES='$(git diff --name-only HEAD~1 HEAD)'
+        $_CHANGED_FILES='$(git diff --name-only HEAD~1 HEAD)'
         echo "Changed files: $_CHANGED_FILES"
         # Get the list of changed files between the latest commit and the previous commit
         # git diff --name-only HEAD~1 HEAD | while read -r file; do
         #   echo "Processing file: $file"
         #   if [[ "$file" =~ .*\.sql$ ]]; then
         #   # if [[ "$file" =~ ^source/.*\.sql$ || "$file" =~ ^historical/.*\.sql$ || "$file" =~ ^test/.*\.sql$ ]]; then
-        #     _SQL_FILES_TO_PROCESS="$_SQL_FILES_TO_PROCESS $file"
+        #     $_SQL_FILES_TO_PROCESS="$_SQL_FILES_TO_PROCESS $file"
         #   fi
         # done
         echo "Changed SQL files: $_SQL_FILES_TO_PROCESS" 
