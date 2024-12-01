@@ -1,0 +1,14 @@
+steps:
+  # Deploy the Cloud Function from the GitHub repository
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args: ['functions', 'deploy', 'test-build', '--runtime', 'python310', '--trigger-http', '--allow-unauthenticated']
+    dir: './cloud_functions/functions_main.py'
+
+  # Install dependencies
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args: ['pip', 'install', '-r', 'requirements.txt']
+    dir: './cloud_functions/requirements.txt'
+
+timeout: '600s'
+options:
+  logging: CLOUD_LOGGING_ONLY
