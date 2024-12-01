@@ -5,23 +5,38 @@ steps:
       - "-c"
       - |
         cd /workspace
-        echo "Fetching changed files..."
-        git fetch --depth=2 origin main
+        if [[ "$BRANCH_NAME" == "main" ]]; then
+            echo "Updating views on PROD environment"
+            echo "Fetching changed files..."
+            git fetch --depth=2 origin main
+            # Get the list of changed files between the latest commit and the previous commit
+            git diff --name-only HEAD~1 HEAD | while read -r file; do
+              echo "Processing file: $file"
+              if [[ "$file" =~ .*\.sql$ ]]; then
+              # if [[ "$file" =~ ^source/.*\.sql$ || "$file" =~ ^historical/.*\.sql$ || "$file" =~ ^test/.*\.sql$ ]]; then
+                echo "Running SQL query from file: $file"
+                bq query --use_legacy_sql=false --project_id=airy-parsec-400006 --dataset_id=exoplanet_dataset --query="$(cat $file)"
+              fi
+            done
+            
+          elif [[ "$BRANCH_NAME" == "test" ]]; then
+            echo "Updating views on TEST environment"
+            echo "Fetching changed files..."
+            git fetch --depth=2 origin main
+            # Get the list of changed files between the latest commit and the previous commit
+            git diff --name-only HEAD~1 HEAD | while read -r file; do
+              echo "Processing file: $file"
+              if [[ "$file" =~ .*\.sql$ ]]; then
+              # if [[ "$file" =~ ^source/.*\.sql$ || "$file" =~ ^historical/.*\.sql$ || "$file" =~ ^test/.*\.sql$ ]]; then
+                echo "Running SQL query from file: $file"
+                bq query --use_legacy_sql=false --project_id=airy-parsec-400006 --dataset_id=exoplanet_dataset --query="$(cat $file)"
+              fi
+            done
+          else
+            echo "Branch not supported"
+            exit 1
         
         
-        # Get the list of changed files between the latest commit and the previous commit
-        git diff --name-only HEAD~1 HEAD | while read -r file; do
-          echo "Processing file: $file"
-          if [[ "$file" =~ .*\.sql$ ]]; then
-          # if [[ "$file" =~ ^source/.*\.sql$ || "$file" =~ ^historical/.*\.sql$ || "$file" =~ ^test/.*\.sql$ ]]; then
-            echo "Running SQL query from file: $file"
-            bq query --use_legacy_sql=false --format=none \
-              "$(cat $file)"
-          fi
-        done
-
-
 timeout: '1600s'
 options:
   logging: CLOUD_LOGGING_ONLY
-
