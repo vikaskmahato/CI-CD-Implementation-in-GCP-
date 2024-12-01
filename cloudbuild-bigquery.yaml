@@ -1,17 +1,20 @@
 steps:
-  # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  #   entrypoint: 'bash'
-  #   args:
-  #     - '-c'
-  #     - |
-  #       # Go to the folder containing the SQL file
-  #       cd sql
-  #       # Run BigQuery query using 'bq'
-  #       bq query --use_legacy_sql=false --format=none \
-  #         "$(cat view_script.sql)"
-    # - '--file=sql/view_script.sql'
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'bash'
+  # Build Docker image for BigQuery update
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/airy-parsec-400006/test-build/bigquery-image:$SHORT_SHA'
+      - '.'
+
+  # Push the Docker image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'push'
+      - 'us-central1-docker.pkg.dev/airy-parsec-400006/test-build/bigquery-image:$SHORT_SHA'
+
+  # Execute
+  - name: 'gcr.io/cloud-builders/bash'
     args:
       - "-c"
       - |
@@ -30,48 +33,11 @@ steps:
               "$(cat $file)"
           fi
         done
-        echo "Changed SQL files: $_SQL_FILES_TO_PROCESS" 
 
-  #       # Save the list of changed files to a workspace file
-  #       # echo "$CHANGED_FILES" > /workspace/changed_files.txt
-        
-  #       # CHANGED_FILES=$(cat /workspace/changed_files.txt)
-  #       # Initialize an empty list of files to process
-        # _SQL_FILES_TO_PROCESS=""
-
-  #       # Identify which files are SQL files in specific folders
-  #       for file in $CHANGED_FILES; do
-  #         if [[ "$file" =~ .*\.sql$ ]]; then
-  #         # if [[ "$file" =~ ^source/.*\.sql$ || "$file" =~ ^historical/.*\.sql$ || "$file" =~ ^test/.*\.sql$ ]]; then
-  #           _SQL_FILES_TO_PROCESS="$_SQL_FILES_TO_PROCESS $file"
-  #         fi
-  #       done
-
-        # Check if there are any SQL files to process
-        # if [ -z "$_SQL_FILES_TO_PROCESS" ]; then
-        #   echo "No SQL files changed. Exiting."
-        #   exit 0
-        # else
-        #   echo "Changed SQL files: $_SQL_FILES_TO_PROCESS"
-        # fi
-
-  # # Run each SQL file in BigQuery
-  # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  #   entrypoint: 'bash'
-  #   args:
-  #     - '-c'
-  #     - |
-  #       # For each SQL file, run the corresponding query in BigQuery
-  #       for file in $_SQL_FILES_TO_PROCESS; do
-  #         echo "Running SQL query from file: $file"
-  #         bq query --use_legacy_sql=false --format=none \
-  #           "$(cat $file)"
-  #       done
+images:
+  - 'us-central1-docker.pkg.dev/airy-parsec-400006/test-build/bigquery-image:$SHORT_SHA'
 
 
-substitutions:
-  _SQL_FILES_TO_PROCESS: ''
-  _CHANGED_FILES: 'vikas'
 timeout: '1600s'
 options:
   logging: CLOUD_LOGGING_ONLY
