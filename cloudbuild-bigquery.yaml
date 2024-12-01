@@ -13,20 +13,22 @@ steps:
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
     env: 
-      - 'CHANGED_FILES='
+      - 'MY_VAR=${_CHANGED_FILES}'
 
     args:
       - "-c"
       - |
-        cd /workspace
-        echo "Fetching changed files..."
-        git fetch --depth=2 origin main
+        echo "Step 1: Initial MY_VAR from substitution: $MY_VAR"
+
+        # cd /workspace
+        # echo "Fetching changed files..."
+        # git fetch --depth=2 origin main
         
-        echo '$_CHANGED_FILES'
-        export MY_VAR="dynamic_value"
-        echo "$MY_VAR" > /workspace/variable.txt
-        MY_VAR=$(cat /workspace/variable.txt)
-        echo "$$MY_VAR"
+        # echo '$_CHANGED_FILES'
+        # export MY_VAR="dynamic_value"
+        # echo "$MY_VAR" > /workspace/variable.txt
+        # MY_VAR=$(cat /workspace/variable.txt)
+        # echo "$$MY_VAR"
 
         # $_CHANGED_FILES='$(git diff --name-only HEAD~1 HEAD)'
         # echo "Changed files: $CHANGED_FILES"
