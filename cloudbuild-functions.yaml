@@ -3,7 +3,7 @@ steps:
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     args: ['gcloud', 'functions', 'deploy', 'test-build', '--runtime', 'python310', '--trigger-http', '--allow-unauthenticated', '--source', './cloud_functions']
 
-  # Install dependencies
+  # Install dependencies.
   - name: 'python:3.10'
     args: ['pip', 'install', '-r', 'requirements.txt']
     dir: './cloud_functions'
