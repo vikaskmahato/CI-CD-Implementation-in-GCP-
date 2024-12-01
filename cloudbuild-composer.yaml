@@ -1,7 +1,7 @@
 steps:
   - name: 'gcr.io/cloud-builders/gcloud'
     args:
-      - "bash"
+      - "cloud-shell"
       - '-c'
       - |
         cd /workspace

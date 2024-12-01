@@ -10,6 +10,7 @@ steps:
       - --allow-unauthenticated 
       - --source=cloud_functions/ 
       - --region=us-central1  
+      - --port=8080
 
 timeout: '1600s'
 options:
