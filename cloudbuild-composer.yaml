@@ -4,30 +4,15 @@ steps:
     args:
       - '-c'
       - |
-        MY_VAR="HELLO"
-        echo "$MY_VAR"
         cd /workspace
         git fetch --depth=2 origin main
-        $_CHANGED_FILES="$(git diff --name-only HEAD~1 HEAD)"
-
-        # Save the list of changed files to a workspace file
-        # echo "$_CHANGED_FILES" > /workspace/_CHANGED_FILES.txt
-      
-        for file in $_CHANGED_FILES; do
+        git diff --name-only HEAD~1 HEAD | while read -r file; do
           if [ "$file" =~ ^composer/dags/.*\.py$]; then
-            $_DAG_FILES="$_DAG_FILES $file"
+            echo "Uploading $file to gs://$_BUCKET_NAME/$file..."
+            gsutil cp $file gs://$_BUCKET_NAME/$file
           fi
         done
 
-        if [ -z "$_DAG_FILES" ]; then
-          echo "No DAG files changed. Exiting..."
-          exit 0
-        fi
-
-        for file in $_DAG_FILES; do
-          echo "Uploading $file to gs://$_BUCKET_NAME/$file..."
-          gsutil cp $file gs://$_BUCKET_NAME/$file
-        done
 
   # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   #   entrypoint: 'bash'
