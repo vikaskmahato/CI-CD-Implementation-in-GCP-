@@ -9,7 +9,7 @@ steps:
         git diff --name-only HEAD~1 HEAD | while read -r file; do
           if [[ "$file" =~ ^composer/dags/.*\.py$ ]]; then
             echo "Uploading $file to gs://$_BUCKET_NAME/$file..."
-            gsutil cp $file gs://$_BUCKET_NAME/$file
+            gsutil cp $file gs://$_BUCKET_NAME/dags/$(basename "$file")
           fi
         done
 
