@@ -7,7 +7,7 @@ steps:
         cd /workspace
         git fetch --depth=2 origin main
         git diff --name-only HEAD~1 HEAD | while read -r file; do
-          if [ "$file" =~ ^composer/dags/.*\.py$]; then
+          if [[ "$file" =~ ^composer/dags/.*\.py$ ]]; then
             echo "Uploading $file to gs://$_BUCKET_NAME/$file..."
             gsutil cp $file gs://$_BUCKET_NAME/$file
           fi
