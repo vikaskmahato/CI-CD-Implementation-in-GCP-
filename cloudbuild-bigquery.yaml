@@ -12,17 +12,12 @@ steps:
     # - '--file=sql/view_script.sql'
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
-    env: 
-      - 'MY_VAR=${_CHANGED_FILES}'
-
     args:
       - "-c"
       - |
-        echo "Step 1: Initial MY_VAR from substitution: $MY_VAR"
-
-        # cd /workspace
-        # echo "Fetching changed files..."
-        # git fetch --depth=2 origin main
+        cd /workspace
+        echo "Fetching changed files..."
+        git fetch --depth=2 origin main
         
         # echo '$_CHANGED_FILES'
         # export MY_VAR="dynamic_value"
@@ -33,13 +28,15 @@ steps:
         # $_CHANGED_FILES='$(git diff --name-only HEAD~1 HEAD)'
         # echo "Changed files: $CHANGED_FILES"
         # Get the list of changed files between the latest commit and the previous commit
-        # git diff --name-only HEAD~1 HEAD | while read -r file; do
-        #   echo "Processing file: $file"
-        #   if [[ "$file" =~ .*\.sql$ ]]; then
-        #   # if [[ "$file" =~ ^source/.*\.sql$ || "$file" =~ ^historical/.*\.sql$ || "$file" =~ ^test/.*\.sql$ ]]; then
-        #     $_SQL_FILES_TO_PROCESS="$_SQL_FILES_TO_PROCESS $file"
-        #   fi
-        # done
+        git diff --name-only HEAD~1 HEAD | while read -r file; do
+          echo "Processing file: $file"
+          if [[ "$file" =~ .*\.sql$ ]]; then
+          # if [[ "$file" =~ ^source/.*\.sql$ || "$file" =~ ^historical/.*\.sql$ || "$file" =~ ^test/.*\.sql$ ]]; then
+            echo "Running SQL query from file: $file"
+            bq query --use_legacy_sql=false --format=none \
+              "$(cat $file)"
+          fi
+        done
         echo "Changed SQL files: $_SQL_FILES_TO_PROCESS" 
 
   #       # Save the list of changed files to a workspace file

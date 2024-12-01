@@ -4,6 +4,8 @@ steps:
     args:
       - '-c'
       - |
+        MY_VAR="HELLO"
+        echo "$MY_VAR"
         cd /workspace
         git fetch --depth=2 origin main
         $_CHANGED_FILES="$(git diff --name-only HEAD~1 HEAD)"
