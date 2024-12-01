@@ -10,17 +10,20 @@ steps:
   #       bq query --use_legacy_sql=false --format=none \
   #         "$(cat view_script.sql)"
     # - '--file=sql/view_script.sql'
-  - name: 'alpine'
-    entrypoint: 'sh'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    env: 
+      - 'CHANGED_FILES='
+
     args:
-      - '-c'
+      - "-c"
       - |
         cd /workspace
         echo "Fetching changed files..."
         git fetch --depth=2 origin main
         
-        
-        CHANGED_FILES='mahato'
+        echo '$_CHANGED_FILES'
+        CHANGED_FILES="mahato"
 
         # $_CHANGED_FILES='$(git diff --name-only HEAD~1 HEAD)'
         echo "Changed files: $CHANGED_FILES"
@@ -32,7 +35,7 @@ steps:
         #     $_SQL_FILES_TO_PROCESS="$_SQL_FILES_TO_PROCESS $file"
         #   fi
         # done
-         
+        echo "Changed SQL files: $_SQL_FILES_TO_PROCESS" 
 
   #       # Save the list of changed files to a workspace file
   #       # echo "$CHANGED_FILES" > /workspace/changed_files.txt
@@ -71,6 +74,9 @@ steps:
   #       done
 
 
+substitutions:
+  _SQL_FILES_TO_PROCESS: ''
+  _CHANGED_FILES: 'vikas'
 timeout: '1600s'
 options:
   logging: CLOUD_LOGGING_ONLY
