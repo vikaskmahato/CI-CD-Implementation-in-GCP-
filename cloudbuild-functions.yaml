@@ -9,7 +9,8 @@ steps:
       - --trigger-http        
       - --allow-unauthenticated 
       - --source=cloud_functions/ 
-      - --region=us-central1  
+      - --region=us-central1 
+      - --entry-point=entry_point
 
 timeout: '1600s'
 options:
