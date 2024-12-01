@@ -24,7 +24,9 @@ steps:
         
         echo '$_CHANGED_FILES'
         export MY_VAR="dynamic_value"
-        echo "MY_VAR=$MY_VAR"
+        echo "$MY_VAR" > /workspace/variable.txt
+        MY_VAR=$(cat /workspace/variable.txt)
+        echo "$$MY_VAR"
 
         # $_CHANGED_FILES='$(git diff --name-only HEAD~1 HEAD)'
         # echo "Changed files: $CHANGED_FILES"
