@@ -2,7 +2,6 @@ steps:
   # Deploy the Cloud Function from the GitHub repository
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     args: ['gcloud', 'functions', 'deploy', 'test-build', '--runtime', 'python310', '--trigger-http', '--allow-unauthenticated', '--source', './cloud_functions']
-    dir: './cloud_functions'
 
   # Install dependencies
   - name: 'python:3.10'
