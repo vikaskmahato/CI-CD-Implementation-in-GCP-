@@ -19,7 +19,7 @@ steps:
               fi
             done
             
-          elif [[ "$BRANCH_NAME" == "test" ]]; then
+        elif [[ "$BRANCH_NAME" == "test" ]]; then
             echo "Updating views on TEST environment"
             echo "Fetching changed files..."
             git fetch --depth=2 origin main
@@ -32,10 +32,10 @@ steps:
                 bq query --use_legacy_sql=false --project_id=airy-parsec-400006 --dataset_id=exoplanet_dataset --query="$(cat $file)"
               fi
             done
-          else
+        else
             echo "Branch not supported"
             exit 1
-        
+        fi
         
 timeout: '1600s'
 options:
