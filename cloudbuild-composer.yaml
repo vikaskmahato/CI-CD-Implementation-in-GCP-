@@ -1,7 +1,7 @@
 steps:
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'bash'
+  - name: 'gcr.io/cloud-builders/gcloud'
     args:
+      - "bash"
       - '-c'
       - |
         cd /workspace
