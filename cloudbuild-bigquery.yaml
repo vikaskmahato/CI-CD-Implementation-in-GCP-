@@ -15,7 +15,8 @@ steps:
               if [[ "$file" =~ .*\.sql$ ]]; then
               # if [[ "$file" =~ ^source/.*\.sql$ || "$file" =~ ^historical/.*\.sql$ || "$file" =~ ^test/.*\.sql$ ]]; then
                 echo "Running SQL query from file: $file"
-                bq query --use_legacy_sql=false --project_id=airy-parsec-400006 --dataset_id=exoplanet_dataset --query="$(cat $file)"
+                bq query --use_legacy_sql=false --project_id=airy-parsec-400006 --dataset_id=exoplanet_dataset --format=none \
+                    "$(cat $file)"
               fi
             done
             
@@ -29,7 +30,8 @@ steps:
               if [[ "$file" =~ .*\.sql$ ]]; then
               # if [[ "$file" =~ ^source/.*\.sql$ || "$file" =~ ^historical/.*\.sql$ || "$file" =~ ^test/.*\.sql$ ]]; then
                 echo "Running SQL query from file: $file"
-                bq query --use_legacy_sql=false --project_id=airy-parsec-400006 --dataset_id=exoplanet_dataset --query="$(cat $file)"
+                bq query --use_legacy_sql=false --project_id=airy-parsec-400006 --dataset_id=exoplanet_dataset --format=none \
+                      "$(cat $file)"
               fi
             done
         else
