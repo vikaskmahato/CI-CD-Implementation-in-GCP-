@@ -27,7 +27,7 @@ steps:
 substitutions:
   _DAG_FILES: ''
   _CHANGED_FILES: ''
-  __BUCKET_NAME: 'us-central1-testing-cloudbu-c3b2633c-bucket'
+  _BUCKET_NAME: 'us-central1-testing-cloudbu-c3b2633c-bucket'
 timeout: '1600s'
 options:
   logging: CLOUD_LOGGING_ONLY
