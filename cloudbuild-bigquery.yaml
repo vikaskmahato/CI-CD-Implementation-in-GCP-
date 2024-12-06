@@ -10,6 +10,7 @@ steps:
             echo "Fetching changed files..."
             git fetch --depth=2 origin main
             # Get the list of changed files between the latest commit and the previous commit
+            git log -1 $COMMIT_SHA --pretty=format:"Author: %an, Committer: %cn"
             git diff --name-only HEAD~1 HEAD | while read -r file; do
               echo "Processing file: $file"
               if [[ "$file" =~ .*\.sql$ ]]; then
