@@ -1,0 +1,5 @@
+{
+  "bucket": "value1",
+  "pipeline_name": "value2",
+  "CDAP_ENDPOINT": "value3"
+}
