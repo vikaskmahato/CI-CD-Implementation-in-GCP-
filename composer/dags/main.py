@@ -13,7 +13,7 @@ default_args = {
 }
 
 def print():
-    print("This is a test DAG.!")
+    print("This is a test DAG for testing.!")
 
 with DAG(
     dag_id='test_dag_composer',
